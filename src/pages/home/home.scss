@@ -1,3 +1,9 @@
 page-home {
-
+    @import url('https://fonts.googleapis.com/css?family=Pacifico');
+    ion-navbar {
+        ion-title {
+            font-family: 'Pacifico', cursive;
+        }
+    }
+    ion-content {}
 }
