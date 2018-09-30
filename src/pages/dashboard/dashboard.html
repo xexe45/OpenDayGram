@@ -1,0 +1,65 @@
+<!--
+  Generated template for the DashboardPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar color="openday">
+        <ion-title text-center>OpenDayGram</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-card (click)="periodosList()" class="card">
+                    <ion-card-content class="card-content">
+                        <ion-icon name="book"></ion-icon>
+                        <ion-card-title>
+                            Colegios
+                        </ion-card-title>
+
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+            <ion-col>
+                <ion-card class="card">
+                    <ion-card-content class="card-content">
+                        <ion-icon name="contacts"></ion-icon>
+                        <ion-card-title>
+                            Usuarios
+                        </ion-card-title>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-card (click)="periodos()" class="card">
+                    <ion-card-content class="card-content">
+                        <ion-icon name="alarm"></ion-icon>
+                        <ion-card-title>
+                            Periodos
+                        </ion-card-title>
+
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+            <ion-col>
+                <ion-card class="card">
+                    <ion-card-content text-center class="card-content">
+                        <ion-icon name="contacts"></ion-icon>
+                        <ion-card-title>
+                            Usuarios
+                        </ion-card-title>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

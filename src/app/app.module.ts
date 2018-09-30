@@ -12,6 +12,10 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { RegisterPage } from '../pages/register/register';
+import { DashboardPage } from '../pages/dashboard/dashboard';
+import { PeriodosPage } from '../pages/periodos/periodos';
+import { PeriodosListPage } from '../pages/periodos-list/periodos-list';
+import { ColegiosPage } from '../pages/colegios/colegios';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,11 @@ import { RegisterPage } from '../pages/register/register';
     HomePage,
     TabsPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    DashboardPage,
+    PeriodosPage,
+    PeriodosListPage,
+    ColegiosPage
   ],
   imports: [
     BrowserModule,
@@ -35,7 +43,11 @@ import { RegisterPage } from '../pages/register/register';
     HomePage,
     TabsPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    DashboardPage,
+    PeriodosPage,
+    PeriodosListPage,
+    ColegiosPage
   ],
   providers: [
     StatusBar,
