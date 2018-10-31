@@ -21,12 +21,7 @@
                 <ion-item>
                     <ion-label>Colegio</ion-label>
                     <ion-select [(ngModel)]="gaming">
-                        <ion-option value="nes">NES</ion-option>
-                        <ion-option value="n64">Nintendo64</ion-option>
-                        <ion-option value="ps">PlayStation</ion-option>
-                        <ion-option value="genesis">Sega Genesis</ion-option>
-                        <ion-option value="saturn">Sega Saturn</ion-option>
-                        <ion-option value="snes">SNES</ion-option>
+                        <ion-option *ngFor="let colegio of colegios" [value]="colegio.key">{{ colegio.name }}</ion-option>
                     </ion-select>
                 </ion-item>
                 <ion-item>
@@ -38,7 +33,7 @@
                 </ion-item>
 
             </ion-list>
-            <button class="boton" block ion-button color="light" clear>Ingresar</button>
+            <button (click)="registrar()" class="boton" block ion-button color="light" clear>Ingresar</button>
         </div>
 
     </div>

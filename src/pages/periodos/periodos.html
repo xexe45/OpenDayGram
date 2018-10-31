@@ -17,20 +17,21 @@
     <ion-list>
         <ion-item>
             <ion-label fixed>Periodo</ion-label>
-            <ion-input type="text" value=""></ion-input>
+            <ion-input required type="text" [(ngModel)]="periodo.name"></ion-input>
         </ion-item>
         <ion-item>
-            <button color="openday" ion-button icon-start block>
+            <button [disabled]="finalActivate()" (click)="save()" color="openday" ion-button icon-start block>
                 <ion-icon name="checkbox"></ion-icon>
                 Guardar
               </button>
+
         </ion-item>
 
     </ion-list>
     <ion-list>
-        <ion-item *ngFor="let item of items">
-            <ion-label>{{ item.name }}</ion-label>
-            <ion-toggle [disabled]="!item.active" [checked]="item.active"></ion-toggle>
+        <ion-item *ngFor="let item of periods">
+            <ion-label (click)="editar(item)">{{ item.name }}</ion-label>
+            <ion-toggle (ionChange)="changeStatus(item)" [disabled]="!item.status" [checked]="item.status"></ion-toggle>
         </ion-item>
     </ion-list>
 </ion-content>

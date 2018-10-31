@@ -14,23 +14,36 @@
 
 
 <ion-content padding>
-    <ion-list>
+    <ion-list *ngIf="periodo.status">
         <ion-item>
             <ion-label fixed>Colegio</ion-label>
-            <ion-input type="text" value=""></ion-input>
+            <ion-input type="text" value="" [(ngModel)]="colegio.name"></ion-input>
         </ion-item>
         <ion-item>
-            <button color="openday" ion-button icon-start block>
+            <button (click)="save()" [disabled]="!periodo.status" color="openday" ion-button icon-start block>
                 <ion-icon name="checkbox"></ion-icon>
                 Guardar
               </button>
         </ion-item>
 
     </ion-list>
+
     <ion-list>
-        <button ion-item *ngFor="let item of colegios" (click)="itemSelected(item)">
-          {{ item.name }}
-          <ion-icon name="arrow-dropright" item-right></ion-icon>
-        </button>
+        <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+        <ion-item-sliding *ngFor="let item of colegios">
+            <ion-item>
+                <h2>{{ item.name }}</h2>
+            </ion-item>
+            <ion-item-options side="left">
+                <button (click)="editar(item)" ion-button color="primary">
+                  <ion-icon name="text"></ion-icon>
+                  Editar
+                </button>
+                <button ion-button color="secondary">
+                  <ion-icon name="call"></ion-icon>
+                  Call
+                </button>
+            </ion-item-options>
+        </ion-item-sliding>
     </ion-list>
 </ion-content>

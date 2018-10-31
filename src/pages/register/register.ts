@@ -1,5 +1,8 @@
+import { SchoolProvider } from './../../providers/school/school';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { PeriodProvider } from '../../providers/period/period';
+import { School } from '../../models/School.model';
 
 /**
  * Generated class for the RegisterPage page.
@@ -15,9 +18,18 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 })
 export class RegisterPage {
   app_name = 'OpenDayGram';
+  periodoActual:any = {};
+  colegios: any[] = [];
+  gaming = '';
+
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
-              public viewCtrl: ViewController) {
+              public viewCtrl: ViewController,
+              private _periodProvide: PeriodProvider,
+              private _schoolProvider: SchoolProvider) {
+
+                  this.getSchools();
+                
   }
 
   ionViewDidLoad() {
@@ -27,6 +39,21 @@ export class RegisterPage {
   iniciar($e){
     $e.preventDefault();
     this.viewCtrl.dismiss();
+  }
+
+  getSchools()
+  {
+    this._periodProvide.getActualPeriod()
+                  .subscribe( data => { 
+                    this.periodoActual = data[0];
+                    this._schoolProvider.getSchoolsThisPeriod(this.periodoActual.key)
+                      .subscribe(colegios => this.colegios = colegios )
+                  } );
+  }
+
+  registrar()
+  {
+    console.log(this.gaming);
   }
 
 }

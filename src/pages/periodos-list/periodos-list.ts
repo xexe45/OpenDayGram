@@ -1,6 +1,8 @@
+import { PeriodProvider } from './../../providers/period/period';
+import { Period } from './../../models/Period.model';
 import { ColegiosPage } from './../colegios/colegios';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 
 /**
  * Generated class for the PeriodosListPage page.
@@ -15,27 +17,34 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'periodos-list.html',
 })
 export class PeriodosListPage {
-  items = [
-    {
-     name: '2017',
-     active: false
-    },
-   {  
-     name: '2018',
-     active: true
-   }
- ];
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    console.log(this.items);
+  
+  periodos: Period[] = [];
+
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              public _periodoProvider: PeriodProvider,
+              public loadingCtrl: LoadingController) {
+
+              const loader = this.loadingCtrl.create({
+                  content: "Espere un momento porfavor...",
+                });
+              loader.present();
+              this._periodoProvider.items.subscribe( data => {
+                console.log(data);
+                this.periodos = data.reverse();
+                loader.dismiss();
+                console.log(this.periodos);
+              } )
+    
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PeriodosListPage');
   }
 
-  itemSelected(item)
+  itemSelected(periodo)
   {
-    this.navCtrl.push(ColegiosPage, { periodo: item })
+    this.navCtrl.push(ColegiosPage, { periodo })
   }
 
 }
