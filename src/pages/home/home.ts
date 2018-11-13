@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, App } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { AlertController } from 'ionic-angular';
+import { AuthProvierProvider } from '../../providers/auth-provier/auth-provier';
 
 @Component({
   selector: 'page-home',
@@ -11,7 +12,10 @@ export class HomePage {
   app_name = 'OpenDayGram';
   constructor(public navCtrl: NavController,
               public alertCtrl: AlertController,
+              private _authProvider: AuthProvierProvider,
               private app:App) {
+
+                console.log(_authProvider.user);
 
   }
 
@@ -29,7 +33,9 @@ export class HomePage {
         {
           text: 'Salir',
           handler: () => {
-            this.app.getRootNav().setRoot(LoginPage);
+            this._authProvider.signOut()
+              .then( () => this.app.getRootNav().setRoot(LoginPage))
+            
           }
         }
       ]

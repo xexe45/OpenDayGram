@@ -1,10 +1,11 @@
 import { HomePage } from './../home/home';
 
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController,AlertController } from 'ionic-angular';
 import { ModalController } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { TabsPage } from '../tabs/tabs';
+import { AuthProvierProvider } from '../../providers/auth-provier/auth-provier';
 
 /**
  * Generated class for the LoginPage page.
@@ -20,9 +21,18 @@ import { TabsPage } from '../tabs/tabs';
 })
 export class LoginPage {
   app_name = 'OpenDayGram';
+
+  credentials: any = {
+    email: null,
+    password: null
+  }
+
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
-              public modalCtrl: ModalController) {
+              public modalCtrl: ModalController,
+              public loadingCtrl: LoadingController,
+              public alertCtrl: AlertController,
+              private _auth: AuthProvierProvider) {
   }
 
   ionViewDidLoad() {
@@ -36,7 +46,31 @@ export class LoginPage {
   }
 
   login(){
-    this.navCtrl.setRoot(TabsPage);
+    if(!this.credentials.email && !this.credentials.password){
+      return;
+    }
+    const loader = this.loadingCtrl.create({
+      content: "Verificando Credenciales...",
+    });
+
+    loader.present();
+
+    this._auth.signIn(this.credentials.email, this.credentials.password)
+      .then( d => {
+        loader.dismiss();
+        this.navCtrl.setRoot(TabsPage);
+      })
+      .catch( error => {
+        console.log(error);
+        loader.dismiss();
+        const alert = this.alertCtrl.create({
+          title: 'Ooooops!',
+          subTitle: 'Credenciales Incorrectas',
+          buttons: ['OK']
+        });
+        alert.present();
+      })
+    
   }
 
 }

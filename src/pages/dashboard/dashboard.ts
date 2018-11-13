@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { PeriodosPage } from '../periodos/periodos';
 import { PeriodosListPage } from '../periodos-list/periodos-list';
+import { UsersPage } from '../users/users';
 
 /**
  * Generated class for the DashboardPage page.
@@ -32,5 +33,10 @@ export class DashboardPage {
   periodosList()
   {
     this.navCtrl.push(PeriodosListPage);
+  }
+
+  users()
+  {
+    this.navCtrl.push(UsersPage);
   }
 }

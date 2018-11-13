@@ -1,3 +1,4 @@
+import { UsersPage } from './../pages/users/users';
 import { LoginPage } from './../pages/login/login';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -23,6 +24,8 @@ import { AngularFireDatabaseModule, AngularFireDatabase } from '@angular/fire/da
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { PeriodProvider } from '../providers/period/period';
 import { SchoolProvider } from '../providers/school/school';
+import { UserProvider } from '../providers/user/user';
+import { AuthProvierProvider } from '../providers/auth-provier/auth-provier';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyAPAM8MlcdkHBj9ZuL_q6kiZ0rovWcNNjU",
@@ -45,7 +48,8 @@ export const firebaseConfig = {
     DashboardPage,
     PeriodosPage,
     PeriodosListPage,
-    ColegiosPage
+    ColegiosPage,
+    UsersPage
   ],
   imports: [
     BrowserModule,
@@ -53,7 +57,7 @@ export const firebaseConfig = {
     HttpClientModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -67,7 +71,8 @@ export const firebaseConfig = {
     DashboardPage,
     PeriodosPage,
     PeriodosListPage,
-    ColegiosPage
+    ColegiosPage,
+    UsersPage
   ],
   providers: [
     StatusBar,
@@ -76,6 +81,8 @@ export const firebaseConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     PeriodProvider,
     SchoolProvider,
+    UserProvider,
+    AuthProvierProvider,
   ]
 })
 export class AppModule {}

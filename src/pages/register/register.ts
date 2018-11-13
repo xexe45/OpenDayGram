@@ -1,8 +1,8 @@
 import { SchoolProvider } from './../../providers/school/school';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController,LoadingController  } from 'ionic-angular';
 import { PeriodProvider } from '../../providers/period/period';
-import { School } from '../../models/School.model';
+
 
 /**
  * Generated class for the RegisterPage page.
@@ -25,10 +25,11 @@ export class RegisterPage {
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public viewCtrl: ViewController,
+              public loadingCtrl: LoadingController,
               private _periodProvide: PeriodProvider,
               private _schoolProvider: SchoolProvider) {
 
-                  this.getSchools();
+              this.getSchools();
                 
   }
 
@@ -43,11 +44,19 @@ export class RegisterPage {
 
   getSchools()
   {
+    const loader = this.loadingCtrl.create({
+      content: "Cargando Colegios...",
+    });
+    loader.present();
     this._periodProvide.getActualPeriod()
                   .subscribe( data => { 
                     this.periodoActual = data[0];
                     this._schoolProvider.getSchoolsThisPeriod(this.periodoActual.key)
-                      .subscribe(colegios => this.colegios = colegios )
+                      .subscribe(colegios => {
+                        this.colegios = colegios
+                        console.log(this.colegios);
+                        loader.dismiss();
+                      } )
                   } );
   }
 
