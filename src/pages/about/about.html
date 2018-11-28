@@ -1,11 +1,24 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      About
-    </ion-title>
-  </ion-navbar>
+    <ion-navbar color="openday">
+        <ion-title text-center>
+            {{ app_name }}
+        </ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+    <div text-center>
+        <img *ngIf="!imagen" src="assets/imgs/noimage.png" alt="">
+        <div *ngIf="imagen">
+            <img [src]="imagen">
+        </div>
+        <button (click)="takePicture()" ion-button color="dark">Tomar Foto!</button>
+        <ion-list>
+            <ion-item>
+                <ion-label floating>Descripción</ion-label>
+                <ion-input type="text"></ion-input>
+            </ion-item>
+        </ion-list>
+    </div>
 
 </ion-content>

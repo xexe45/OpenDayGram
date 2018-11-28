@@ -1,5 +1,7 @@
 {
   "name": "OpenDayGram",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular"
 }

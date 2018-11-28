@@ -24,9 +24,9 @@ export class UserProvider {
     
     const promise = new Promise((resolve, reject) => {
       this.http.post(this.URL, { email:user.email, password: user.password, returnSecureToken: true  })
-      .subscribe( d => {
+      .subscribe( (d: any) => {
         console.log(d);
-        const k = itemsRef.push({name:user.name,email:user.email, isAdmin: user.isAdmin, isStudent: user.isStudent}).key;
+        const k = itemsRef.push({name:user.name,email:user.email, isAdmin: user.isAdmin, isStudent: user.isStudent, user_id: d.localId}).key;
         resolve(k);
       }, (error) => {
         reject(error);
@@ -34,6 +34,36 @@ export class UserProvider {
     });
     
     return promise;
+  }
+
+  adduserStudent(user: User, key: string){
+    const itemsRef = this.db.list('users');
+    const promise = new Promise((resolve, reject) => {
+        
+      const k = itemsRef.push({name:user.name,email:user.email, isAdmin: user.isAdmin, isStudent: user.isStudent, user_id: key}).key;
+
+      if(k.length > 0){
+        resolve(k)
+      }else{
+        reject("Error");
+      }
+        
+    });
+    
+    return promise;
+  }
+
+  userLogged(uid: string)
+  {
+    const itemsRef = this.db.list('users', ref => ref.orderByChild('user_id').equalTo(uid));
+    // Use snapshotChanges().map() to store the key
+    const items = itemsRef.snapshotChanges().pipe(
+      map(changes => 
+        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+      )
+    );
+
+    return items;
   }
 
 }

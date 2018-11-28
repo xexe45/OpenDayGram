@@ -1,7 +1,14 @@
+import { HomePage } from './../home/home';
+import { Student } from './../../models/Student.model';
+import { AuthProvierProvider } from './../../providers/auth-provier/auth-provier';
 import { SchoolProvider } from './../../providers/school/school';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController,LoadingController  } from 'ionic-angular';
 import { PeriodProvider } from '../../providers/period/period';
+import { User } from '../../models/User.model';
+import { UserProvider } from '../../providers/user/user';
+import { StudentProvider } from '../../providers/student/student';
+import { TabsPage } from '../tabs/tabs';
 
 
 /**
@@ -20,14 +27,24 @@ export class RegisterPage {
   app_name = 'OpenDayGram';
   periodoActual:any = {};
   colegios: any[] = [];
-  gaming = '';
+ 
+  register = {
+    name: null,
+    apellidos: null,
+    school: '',
+    email: null,
+    password: null,
+  }
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public viewCtrl: ViewController,
               public loadingCtrl: LoadingController,
               private _periodProvide: PeriodProvider,
-              private _schoolProvider: SchoolProvider) {
+              private _schoolProvider: SchoolProvider,
+              private _authProvider: AuthProvierProvider,
+              private _userProvider: UserProvider,
+              private _studentProvider: StudentProvider) {
 
               this.getSchools();
                 
@@ -62,7 +79,23 @@ export class RegisterPage {
 
   registrar()
   {
-    console.log(this.gaming);
+    let nombre = `${this.register.name} ${this.register.apellidos}`;
+    const user = new User(null, nombre, null, false, true, this.register.email, this.register.password);
+    this._authProvider.signUp(user)
+      .then( response => {
+        console.log(response);
+        this._userProvider.adduserStudent(user, response.user.uid)
+          .then( (r: any) => {
+              const student = new Student(r, this.register.school);
+              this._studentProvider.adduserStudent(student)
+                .then( kl => {
+                  this.navCtrl.setRoot(TabsPage);
+                })
+          } )
+      })
+      .catch( err => {
+        console.log(err);
+      } )
   }
 
 }

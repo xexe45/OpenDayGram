@@ -3,6 +3,7 @@ import { NavController, App } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { AlertController } from 'ionic-angular';
 import { AuthProvierProvider } from '../../providers/auth-provier/auth-provier';
+import { UserProvider } from '../../providers/user/user';
 
 @Component({
   selector: 'page-home',
@@ -10,12 +11,12 @@ import { AuthProvierProvider } from '../../providers/auth-provier/auth-provier';
 })
 export class HomePage {
   app_name = 'OpenDayGram';
+
   constructor(public navCtrl: NavController,
               public alertCtrl: AlertController,
               private _authProvider: AuthProvierProvider,
+              private _userProvider: UserProvider,
               private app:App) {
-
-                console.log(_authProvider.user);
 
   }
 

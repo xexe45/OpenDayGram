@@ -1,3 +1,4 @@
+import { User } from './../../models/User.model';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase/app';
@@ -18,6 +19,10 @@ export class AuthProvierProvider {
       }
       this.user = user;      
     });
+  }
+
+  signUp(user: User){
+    return this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
   }
 
   signIn(email, password) {

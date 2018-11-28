@@ -13,23 +13,23 @@
         <div class="form">
             <ion-list>
                 <ion-item>
-                    <ion-input type="text" placeholder="Nombres"></ion-input>
+                    <ion-input type="text" [(ngModel)]="register.name" placeholder="Nombres"></ion-input>
                 </ion-item>
                 <ion-item>
-                    <ion-input type="text" placeholder="Apellidos"></ion-input>
+                    <ion-input [(ngModel)]="register.apellidos" type="text" placeholder="Apellidos"></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-label>Colegio</ion-label>
-                    <ion-select [(ngModel)]="gaming">
+                    <ion-select [(ngModel)]="register.school">
                         <ion-option *ngFor="let colegio of colegios" [value]="colegio.key">{{ colegio.name }}</ion-option>
                     </ion-select>
                 </ion-item>
                 <ion-item>
-                    <ion-input type="email" placeholder="Coreo electrónico"></ion-input>
+                    <ion-input [(ngModel)]="register.email" type="email" placeholder="Coreo electrónico"></ion-input>
                 </ion-item>
 
                 <ion-item>
-                    <ion-input type="password" placeholder="Contraseña"></ion-input>
+                    <ion-input [(ngModel)]="register.password" type="password" placeholder="Contraseña"></ion-input>
                 </ion-item>
 
             </ion-list>
