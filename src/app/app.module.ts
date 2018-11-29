@@ -32,12 +32,12 @@ import { StudentProvider } from '../providers/student/student';
 import { Camera } from '@ionic-native/camera';
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyAPAM8MlcdkHBj9ZuL_q6kiZ0rovWcNNjU",
-  authDomain: "heroesapp-1ab0c.firebaseapp.com",
-  databaseURL: "https://heroesapp-1ab0c.firebaseio.com",
-  projectId: "heroesapp-1ab0c",
-  storageBucket: "heroesapp-1ab0c.appspot.com",
-  messagingSenderId: "330674308169"
+    apiKey: "AIzaSyAPAM8MlcdkHBj9ZuL_q6kiZ0rovWcNNjU",
+    authDomain: "heroesapp-1ab0c.firebaseapp.com",
+    databaseURL: "https://heroesapp-1ab0c.firebaseio.com",
+    projectId: "heroesapp-1ab0c",
+    storageBucket: "heroesapp-1ab0c.appspot.com",
+    messagingSenderId: "330674308169"
 };
 
 @NgModule({
