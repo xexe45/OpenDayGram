@@ -27,9 +27,12 @@ import { SchoolProvider } from '../providers/school/school';
 import { UserProvider } from '../providers/user/user';
 import { AuthProvierProvider } from '../providers/auth-provier/auth-provier';
 import { StudentProvider } from '../providers/student/student';
+import { CargaArchivoProvider } from '../providers/carga-archivo/carga-archivo';
 
 //Native
 import { Camera } from '@ionic-native/camera';
+import { PostProvider } from '../providers/post/post';
+
 
 export const firebaseConfig = {
     apiKey: "AIzaSyAPAM8MlcdkHBj9ZuL_q6kiZ0rovWcNNjU",
@@ -88,7 +91,9 @@ export const firebaseConfig = {
     UserProvider,
     AuthProvierProvider,
     StudentProvider,
-    Camera
+    Camera,
+    CargaArchivoProvider,
+    PostProvider
   ]
 })
 export class AppModule {}

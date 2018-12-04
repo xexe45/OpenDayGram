@@ -16,7 +16,10 @@
         <ion-list>
             <ion-item>
                 <ion-label floating>Descripción</ion-label>
-                <ion-input type="text"></ion-input>
+                <ion-input [(ngModel)]="descripcion" type="text"></ion-input>
+            </ion-item>
+            <ion-item>
+                <button (click)="crearPost()" ion-button type="button" color="openday" block>Crear Publicación</button>
             </ion-item>
         </ion-list>
     </div>

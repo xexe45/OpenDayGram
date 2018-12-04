@@ -1,3 +1,4 @@
+import { PostProvider } from './../../providers/post/post';
 import { Component } from '@angular/core';
 import { NavController, App } from 'ionic-angular';
 import { LoginPage } from '../login/login';
@@ -11,12 +12,18 @@ import { UserProvider } from '../../providers/user/user';
 })
 export class HomePage {
   app_name = 'OpenDayGram';
+  posts: any[] = [];
 
   constructor(public navCtrl: NavController,
               public alertCtrl: AlertController,
               private _authProvider: AuthProvierProvider,
               private _userProvider: UserProvider,
+              private _postProvider: PostProvider,
               private app:App) {
+
+                this._postProvider.posts.subscribe( data => {
+                  this.posts = data.reverse();
+                } )
 
   }
 
