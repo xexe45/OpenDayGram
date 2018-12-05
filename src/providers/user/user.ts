@@ -53,9 +53,9 @@ export class UserProvider {
     return promise;
   }
 
-  userLogged(uid: string)
+  userLogged(email: string)
   {
-    const itemsRef = this.db.list('users', ref => ref.orderByChild('user_id').equalTo(uid));
+    const itemsRef = this.db.list('users', ref => ref.orderByChild('email').equalTo(email));
     // Use snapshotChanges().map() to store the key
     const items = itemsRef.snapshotChanges().pipe(
       map(changes => 

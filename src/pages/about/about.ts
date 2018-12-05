@@ -57,7 +57,12 @@ export class AboutPage {
   }
 
   crearPost(){
-    this._userProvider.userLogged(this._auth.user.uid)
+    let v = this.dataValidate()
+    if(v.error){
+      this.mostrarToast(v.message);
+      return;
+    }
+    this._userProvider.userLogged(this._auth.user.email)
       .subscribe( (usuario: any) => {
         const hoy = new Date();
         const post = new Post(usuario[0].key, usuario[0].name,hoy.toString(),this.imagen64,this.descripcion, null);
@@ -91,10 +96,41 @@ export class AboutPage {
 }
 
 mostrarToast(mensaje: string){
-  let toast = this.toastCtrl.create({
+  const toast = this.toastCtrl.create({
     message: mensaje,
     duration: 2000
   }).present();
+}
+
+private dataValidate(){
+  
+  let validar = {
+    error: null,
+    message: null
+  };
+
+  if(!this.imagen64){
+    validar = {
+      error: true,
+      message: 'Seleccionar foto'
+    }
+    return validar;
+  }
+
+  if(!this.descripcion){
+    validar = {
+      error: true,
+      message: 'Ingresar una descripción de la publicación'
+    }
+    return validar;
+  }
+  
+  validar = {
+    error: false,
+    message: 'OK'
+  }
+  return validar;
+
 }
 
   

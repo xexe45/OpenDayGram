@@ -23,6 +23,7 @@ export class HomePage {
 
                 this._postProvider.posts.subscribe( data => {
                   this.posts = data.reverse();
+                  
                 } )
 
   }

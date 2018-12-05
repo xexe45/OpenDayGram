@@ -17,14 +17,16 @@ export class TabsPage {
   tab3Root = ContactPage;
   tab4Root = DashboardPage;
 
-  user = {};
+  user:any = {};
 
   constructor(
     private _authProvider: AuthProvierProvider,
     private _userProvider: UserProvider
     ) {
-    this._userProvider.userLogged(this._authProvider.user.uid)
+    console.log(this.user);
+    this._userProvider.userLogged(this._authProvider.user.email)
                 .subscribe( user => {
+                  console.log(user);
                   this.user = user[0];
                   console.log(this.user);
                 })

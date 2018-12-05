@@ -1,9 +1,8 @@
-import { HomePage } from './../home/home';
 import { Student } from './../../models/Student.model';
 import { AuthProvierProvider } from './../../providers/auth-provier/auth-provier';
 import { SchoolProvider } from './../../providers/school/school';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController,LoadingController  } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController,LoadingController,AlertController   } from 'ionic-angular';
 import { PeriodProvider } from '../../providers/period/period';
 import { User } from '../../models/User.model';
 import { UserProvider } from '../../providers/user/user';
@@ -40,6 +39,7 @@ export class RegisterPage {
               public navParams: NavParams,
               public viewCtrl: ViewController,
               public loadingCtrl: LoadingController,
+              public alertCtrl: AlertController,
               private _periodProvide: PeriodProvider,
               private _schoolProvider: SchoolProvider,
               private _authProvider: AuthProvierProvider,
@@ -94,8 +94,25 @@ export class RegisterPage {
           } )
       })
       .catch( err => {
-        console.log(err);
+        console.log(err.code);
+        const errorCode = err.code;
+        let message: string;
+        if(errorCode == 'auth/email-already-in-use'){
+          message = 'El correo electrónico ya se encuentra registrado';
+        }else if( errorCode == 'auth/weak-password' ){
+          message = 'Contraseña insegura, la contraseña debe contener 6 a más caracteres';
+        }
+        this.showAlert('Oooooops!', message);
       } )
+  }
+
+  private showAlert(title: string, text: string) {
+    const alert = this.alertCtrl.create({
+      title: title,
+      subTitle: text,
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
 }

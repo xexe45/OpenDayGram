@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,LoadingController,AlertController } from 'ionic-angular';
 import { User } from '../../models/User.model';
 import { UserProvider } from '../../providers/user/user';
 
@@ -30,7 +30,7 @@ export class UsersPage {
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public loadingCtrl: LoadingController,
-             
+              public alertCtrl: AlertController,
               private _userProvider: UserProvider) {
   }
 
@@ -63,14 +63,25 @@ export class UsersPage {
                 isStudent: false,
                 email: null,
                 password: null
-              }
+              };
+          
+          this.showAlert('Correcto!','Usuario de tipo administrador creado correctamente');
           })
           .catch(err => {
-            console.log(err);
+            console.log(err.error.error.message);
             loader.dismiss();
-              
+            this.showAlert('Ooooops',err.error.error.message);  
               
           })
+  }
+
+  private showAlert(title: string, text: string) {
+    const alert = this.alertCtrl.create({
+      title: title,
+      subTitle: text,
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
 }
