@@ -50,4 +50,17 @@ export class SchoolProvider {
     return itemsRef.update(key, school);
   }
 
+  existsSchool(school: string)
+  {
+    const itemsRef = this.db.list('schools', ref => ref.orderByChild('name').equalTo(school));
+    // Use snapshotChanges().map() to store the key
+    const items = itemsRef.snapshotChanges().pipe(
+      map(changes => 
+        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+      )
+    );
+
+    return items;
+  }
+
 }

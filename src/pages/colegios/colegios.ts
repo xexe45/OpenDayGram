@@ -1,9 +1,9 @@
 import { SchoolProvider } from './../../providers/school/school';
 
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
-import { School } from './../../models/School.model';
+import { IonicPage, NavController, NavParams, LoadingController,ToastController } from 'ionic-angular';
 import { Schools } from '../../interfaces/school.interface';
+import { School } from '../../models/School.model';
 
 /**
  * Generated class for the ColegiosPage page.
@@ -31,6 +31,7 @@ export class ColegiosPage {
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public loadingCtrl: LoadingController,
+              public toastCtrl: ToastController,
               public _schoolProvider: SchoolProvider) {
 
     this.periodo = this.navParams.get('periodo')
@@ -59,37 +60,53 @@ export class ColegiosPage {
 
     const colegio = new School(this.colegio.key, this.periodo.key, this.colegio.name);
 
-    if(this.option === 'insert'){
+    this.validSchool(colegio)
+      .then((t) => {
+        if(this.option === 'insert'){
       
-      this._schoolProvider.addItem(colegio)
-        .then( () => {
-          loader.dismiss();
-          this.colegio = {
-            key: null,
-            period_key: null,
-            name: null
-          }
-        })
-        .catch(err => {
-          console.log(err);
-          loader.dismiss();
-        })
-    }else if(this.option === "update"){
-      this._schoolProvider.update(colegio.key, colegio)
-      .then( () => {
-        loader.dismiss();
-        this.colegio = {
-          key: null,
-          period_key: null,
-          name: null
-        };
-        this.option = "insert";
+          this._schoolProvider.addItem(colegio)
+            .then( () => {
+              loader.dismiss();
+              this.clear();
+              this.mostrarToast('Colegio Registrado Correctamente');
+            })
+            .catch(err => {
+              console.log(err);
+              loader.dismiss();
+              this.mostrarToast(err);
+            })
+        }else if(this.option === "update"){
+          this._schoolProvider.update(colegio.key, colegio)
+          .then( () => {
+            loader.dismiss();
+            this.clear();
+            this.mostrarToast('Colegio Editado Correctamente');
+          })
+          .catch(err => {
+            console.log(err);
+            loader.dismiss();
+            this.mostrarToast(err);
+          })
+        }
       })
-      .catch(err => {
-        console.log(err);
+      .catch( f => {
         loader.dismiss();
-      })
-    }
+        console.log('Colegio Existe');
+        this.mostrarToast('El Colegio ya se encuentra registrado');
+        this.clear();
+      } )
+    
+    
+
+    
+  }
+  private clear(){
+    this.colegio = {
+      key: null,
+      period_key: null,
+      name: null
+    };
+    this.option = "insert";
   }
 
   editar(school : School){
@@ -111,6 +128,31 @@ export class ColegiosPage {
     }else{
       this.initializeItems();
     }
+  }
+
+  private validSchool(school: School){
+    const promise = new Promise((resolve, reject) => {
+      this._schoolProvider.existsSchool(school.name)
+      .subscribe( schools => {
+          if( schools.length > 0 ){
+            reject(false);
+            
+          }else{
+            resolve(true);
+          }
+
+          
+      })
+    });
+
+    return promise;
+  }
+
+  private mostrarToast(mensaje: string){
+    const toast = this.toastCtrl.create({
+      message: mensaje,
+      duration: 2000
+    }).present();
   }
 
 }

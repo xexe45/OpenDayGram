@@ -12,7 +12,12 @@
         <div *ngIf="imagen">
             <img [src]="imagen">
         </div>
-        <button (click)="takePicture()" ion-button color="dark">Tomar Foto!</button>
+        <div>
+            <button (click)="takePicture()" ion-button icon-only color="dark">
+                <ion-icon name="camera"></ion-icon>
+            </button>
+        </div>
+
         <ion-list>
             <ion-item>
                 <ion-label floating>Descripción</ion-label>
