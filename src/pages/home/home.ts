@@ -1,10 +1,10 @@
 import { PostProvider } from './../../providers/post/post';
 import { Component } from '@angular/core';
-import { NavController, App } from 'ionic-angular';
+import { NavController, App,ModalController,AlertController  } from 'ionic-angular';
 import { LoginPage } from '../login/login';
-import { AlertController } from 'ionic-angular';
 import { AuthProvierProvider } from '../../providers/auth-provier/auth-provier';
 import { UserProvider } from '../../providers/user/user';
+import { PublicacionPage } from '../publicacion/publicacion';
 
 @Component({
   selector: 'page-home',
@@ -16,6 +16,7 @@ export class HomePage {
 
   constructor(public navCtrl: NavController,
               public alertCtrl: AlertController,
+              public modalCtrl: ModalController,
               private _authProvider: AuthProvierProvider,
               private _userProvider: UserProvider,
               private _postProvider: PostProvider,
@@ -44,6 +45,7 @@ export class HomePage {
           handler: () => {
             this._authProvider.signOut()
               .then( () => this.app.getRootNav().setRoot(LoginPage))
+              .catch(err => console.log(err))
             
           }
         }
@@ -51,6 +53,11 @@ export class HomePage {
     });
     confirm.present();
     
+  }
+
+  verPub(publicacion: any){
+    const modal = this.modalCtrl.create(PublicacionPage, {publicacion: publicacion});
+    modal.present();
   }
 
 }

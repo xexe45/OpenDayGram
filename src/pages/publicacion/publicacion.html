@@ -1,0 +1,55 @@
+<!--
+  Generated template for the PublicacionPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar color="openday">
+        <ion-title text-center>{{ publicacion.user }}</ion-title>
+        <ion-buttons end>
+            <button (click)="cerrar()" ion-button icon-only>
+        <ion-icon name="close"></ion-icon>
+      </button>
+        </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="card-background-page">
+    <ion-card>
+        <img [src]="publicacion.img" />
+        <div class="card-title">{{ publicacion.description }}</div>
+        <div class="card-subtitle">
+            <p>{{ countLikes }}
+                <ion-icon name="heart"></ion-icon>
+            </p>
+
+        </div>
+
+    </ion-card>
+    <div class="like">
+        <button (click)="like(publicacion.key)" color="openday" ion-button icon-only block>
+            <ion-icon *ngIf="!iLike" name="heart-outline"></ion-icon>
+            <ion-icon *ngIf="iLike" name="heart"></ion-icon>
+        </button>
+    </div>
+
+    <!--<ion-card>
+        <ion-card-header no-padding>
+            <ion-list>
+                <ion-item>
+                    <ion-avatar item-start>
+                        <img src="assets/imgs/login-icon.png">
+                    </ion-avatar>
+                    <h2>{{ publicacion.user }}</h2>
+                    <p>{{ publicacion.date | amTimeAgo }}</p>
+                </ion-item>
+            </ion-list>
+        </ion-card-header>
+        <img [src]="publicacion.img" />
+        
+    </ion-card>-->
+</ion-content>

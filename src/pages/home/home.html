@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content no-padding no-margin>
-    <ion-card *ngFor="let post of posts">
+    <ion-card *ngFor="let post of posts" (click)="verPub(post)">
         <ion-card-header no-padding>
             <ion-list>
                 <ion-item>
@@ -15,7 +15,7 @@
                         <img src="assets/imgs/login-icon.png">
                     </ion-avatar>
                     <h2>{{ post.user }}</h2>
-                    <p>{{ post.date }}</p>
+                    <p>{{ post.date | amTimeAgo }}</p>
                 </ion-item>
             </ion-list>
         </ion-card-header>
@@ -24,9 +24,6 @@
             <ion-card-title>
                 {{ post.description }}
             </ion-card-title>
-
-            <ion-icon name="heart-outline"></ion-icon>
-            <ion-icon name="text"></ion-icon>
         </ion-card-content>
     </ion-card>
 

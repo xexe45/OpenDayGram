@@ -89,6 +89,7 @@ export class RegisterPage {
               const student = new Student(r, this.register.school);
               this._studentProvider.adduserStudent(student)
                 .then( kl => {
+                  this.showAlert('Bienvenido', 'Tu usuario fue dado de alta correctamente');
                   this.navCtrl.setRoot(TabsPage);
                 })
           } )

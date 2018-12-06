@@ -1,3 +1,4 @@
+import { PublicacionPage } from './../pages/publicacion/publicacion';
 import { UsersPage } from './../pages/users/users';
 import { LoginPage } from './../pages/login/login';
 import { NgModule, ErrorHandler } from '@angular/core';
@@ -5,6 +6,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HttpClientModule} from "@angular/common/http";
+import { MomentModule } from 'angular2-moment';
+
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
@@ -32,6 +35,8 @@ import { CargaArchivoProvider } from '../providers/carga-archivo/carga-archivo';
 //Native
 import { Camera } from '@ionic-native/camera';
 import { PostProvider } from '../providers/post/post';
+import { PipesModule } from '../pipes/pipes.module';
+import { LikeProvider } from '../providers/like/like';
 
 
 export const firebaseConfig = {
@@ -56,7 +61,9 @@ export const firebaseConfig = {
     PeriodosPage,
     PeriodosListPage,
     ColegiosPage,
-    UsersPage
+    UsersPage,
+    PublicacionPage
+    
   ],
   imports: [
     BrowserModule,
@@ -65,6 +72,8 @@ export const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
+    MomentModule,
+    PipesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -79,7 +88,8 @@ export const firebaseConfig = {
     PeriodosPage,
     PeriodosListPage,
     ColegiosPage,
-    UsersPage
+    UsersPage,
+    PublicacionPage
   ],
   providers: [
     StatusBar,
@@ -93,7 +103,8 @@ export const firebaseConfig = {
     StudentProvider,
     Camera,
     CargaArchivoProvider,
-    PostProvider
+    PostProvider,
+    LikeProvider
   ]
 })
 export class AppModule {}
