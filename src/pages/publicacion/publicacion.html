@@ -31,25 +31,16 @@
 
     </ion-card>
     <div class="like">
-        <button (click)="like(publicacion.key)" color="openday" ion-button icon-only block>
-            <ion-icon *ngIf="!iLike" name="heart-outline"></ion-icon>
-            <ion-icon *ngIf="iLike" name="heart"></ion-icon>
+        <button *ngIf="iLike == false" (click)="like(publicacion.key)" color="openday" ion-button icon-only block>
+            <ion-icon name="heart-outline"></ion-icon>
+        </button>
+
+        <button *ngIf="iLike == true" (click)="borrar()" color="openday" ion-button icon-only block>
+            
+            
+            <ion-icon name="heart"></ion-icon>
         </button>
     </div>
 
-    <!--<ion-card>
-        <ion-card-header no-padding>
-            <ion-list>
-                <ion-item>
-                    <ion-avatar item-start>
-                        <img src="assets/imgs/login-icon.png">
-                    </ion-avatar>
-                    <h2>{{ publicacion.user }}</h2>
-                    <p>{{ publicacion.date | amTimeAgo }}</p>
-                </ion-item>
-            </ion-list>
-        </ion-card-header>
-        <img [src]="publicacion.img" />
-        
-    </ion-card>-->
+
 </ion-content>

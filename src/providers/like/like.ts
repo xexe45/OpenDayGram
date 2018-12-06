@@ -57,4 +57,9 @@ export class LikeProvider {
     return items;
   }
 
+  deleteLike(key: string) {
+    const itemsRef = this.db.list('likes');
+    return itemsRef.remove(key)
+  }
+
 }

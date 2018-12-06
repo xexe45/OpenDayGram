@@ -21,7 +21,8 @@ export class PublicacionPage {
   publicacion: any = {};
   likes: Like[] = [];
   countLikes: number = 0;
-  iLike: boolean = false;
+  iLike: boolean = null;
+  likeActivate: any = {};
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
@@ -33,24 +34,14 @@ export class PublicacionPage {
               private _likeProvider: LikeProvider) {
 
                 this.publicacion = this.navParams.get('publicacion');
+                this.meGusta();
                 this._likeProvider.likesByPub(this.publicacion.key)
                   .subscribe( (likes: any) => {
                     this.likes = likes;
                     this.countLikes = this.likes.length;
-                    this._userProvider.userLogged(this._authProvider.user.email)
-                      .subscribe( us => {
-                        const k = `${this.publicacion.key}${us[0].key}`;
-                        this._likeProvider.myLike(k)
-                          .subscribe( l => {
-                            if(l.length > 0){
-                              this.iLike = true;
-                            }else{
-                              this.iLike = false;
-                            }
-                            console.log(this.iLike);
-                          } )
-                      })
-                  } )
+                    
+                  } );
+                
   }
 
   ionViewDidLoad() {
@@ -67,23 +58,68 @@ export class PublicacionPage {
       content: "Espere un momento porfavor...",
     });
     loader.present();
-
+    
     this._userProvider.userLogged(this._authProvider.user.email)
       .subscribe( user => {
         const keys = `${key}${user[0].key}`;
-        const like = new Like(null, key, user[0].key,keys);
-        this._likeProvider.newLike(like)
-          .then( () => {
-            loader.dismiss();
-            this.presentToast('Like Agregado');
-          })
-          .catch( err => {
-            loader.dismiss();
-            this.presentToast('No se pudo agregar el like');
-          } )
+          
+          const like = new Like(null, key, user[0].key,keys);
+          this._likeProvider.newLike(like)
+            .then( () => {
+              loader.dismiss();
+              this.presentToast('Like Agregado');
+            })
+            .catch( err => {
+              loader.dismiss();
+              this.presentToast('No se pudo agregar el like');
+            } )
+        
+        
       } )
     
   }
+  /*
+  borrar(key: string){
+    this._userProvider.userLogged(this._authProvider.user.email)
+                      .subscribe( us => {
+                        const k = `${this.publicacion.key}${us[0].key}`;
+                        this._likeProvider.myLike(k)
+                          .subscribe( l => {
+                            this._likeProvider.deleteLike(l[0].key)
+                              .then(() => {
+                                this.presentToast("Ya no te gusta esta publicación")
+                              })
+                          } )
+                      })
+  }
+  */
+   borrar(){
+     this._likeProvider.deleteLike(this.likeActivate.key)
+       .then(() => {
+         this.presentToast("Ya no te gusta esta publicación");
+         this.likeActivate = {};
+       })
+   }
+
+  meGusta(){
+    this._userProvider.userLogged(this._authProvider.user.email)
+      .subscribe( user => {
+          const k = `${this.publicacion.key}${user[0].key}`;
+          this._likeProvider.myLike(k).subscribe( data => {
+            console.log(data);
+            if(data.length > 0){
+              this.iLike = true;
+              this.likeActivate = data[0];
+            }else{
+              this.iLike = false;
+              this.likeActivate = {};
+            }
+            console.log(this.iLike);
+          })
+      } )
+    
+  }
+
 
   private presentToast(message: string) {
     const toast = this.toastCtrl.create({
